@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Home - ElderlyCare</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <i class="fas fa-heart-pulse"></i>
+                <h1>ElderlyCare Management</h1>
+            </div>
+            <p>Professional care management system for senior living facilities</p>
+        </header>
+        
+        <nav>
+            <a href="/residents"><i class="fas fa-users"></i> Residents</a>
+            <a href="/guardians"><i class="fas fa-user-shield"></i> Guardians</a>
+            <a href="/health"><i class="fas fa-notes-medical"></i> Health Details</a>
+            <a href="/food"><i class="fas fa-utensils"></i> Food Preferences</a>
+            <a href="/reports"><i class="fas fa-chart-pie"></i> Reports</a>
+        </nav>
+        
+        <div class="stats">
+            <div class="stat-card">
+                <i class="fas fa-bed fa-2x"></i>
+                <h3 id="residentCount">--</h3>
+                <p>Total Residents</p>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-user-nurse fa-2x"></i>
+                <h3>24/7</h3>
+                <p>Care Available</p>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-calendar-check fa-2x"></i>
+                <h3 id="todayDate">--</h3>
+                <p>Today's Date</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const today = new Date();
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            document.getElementById('todayDate').textContent = today.toLocaleDateString('en-US', options);
+        });
+    </script>
+</body>
+</html>

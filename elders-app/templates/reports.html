@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Reports</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fontawesome/6.4.0/css/all.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+</head>
+<body>
+  <div class="container">
+    <h1><i class="fas fa-chart-pie"></i> Reports</h1>
+    <div class="card">
+      <h2><i class="fas fa-venus-mars"></i> Resident Gender Distribution</h2>
+      <div style="display: flex; flex-wrap: wrap; gap: 2rem; margin-top: 1.5rem;">
+        <div style="flex: 1; min-width: 300px;">
+          <table>
+            <tr>
+              <th>Gender</th>
+              <th>Count</th>
+            </tr>
+            {% for g in gender_count %}
+            <tr>
+              <td>{{ g[0] }}</td>
+              <td>{{ g[1] }}</td>
+            </tr>
+            {% endfor %}
+          </table>
+        </div>
+        <div style="flex: 1; min-width: 300px; min-height: 300px;">
+          <canvas id="genderChart"></canvas>
+        </div>
+      </div>
+    </div>
+    <a href="/" class="back-button"><i class="fas fa-arrow-left"></i> Back Home</a>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // This is a placeholder for chart creation
+      // In a real implementation, you would use the gender_count data from the server
+      const genderLabels = [];
+      const genderData = [];
+      // Get data from the table
+      const table = document.querySelector('table');
+      const rows = table.querySelectorAll('tr');
+      for (let i = 1; i < rows.length; i++) {
+        const cells = rows[i].querySelectorAll('td');
+        genderLabels.push(cells[0].textContent);
+        genderData.push(parseInt(cells[1].textContent));
+      }
+      // Create chart
+      const ctx = document.getElementById('genderChart').getContext('2d');
+      new Chart(ctx, {
+        type: 'pie',
+        data: {
+          labels: genderLabels,
+          datasets: [{
+            data: genderData,
+            backgroundColor: [
+              '#4285f4', '#34a853', '#fbbc05', '#ea4335', '#673ab7', '#ff6d00'
+            ],
+            borderWidth: 1
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              position: 'bottom',
+            },
+            title: {
+              display: true,
+              text: 'Gender Distribution'
+            }
+          }
+        }
+      });
+    });
+  </script>
+</body>
+</html>

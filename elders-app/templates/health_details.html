@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Health Details</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1><i class="fas fa-notes-medical"></i> Health Details</h1>
+        
+        <div class="card">
+            <h2>Medical Information</h2>
+            <table>
+                <tr>
+                    <th>ID</th>
+                    <th>Resident ID</th>
+                    <th>Conditions</th>
+                    <th>Mobility</th>
+                    <th>Cognitive</th>
+                    <th>Routine</th>
+                </tr>
+                {% for h in health %}
+                <tr>
+                    <td>{{ h[0] }}</td>
+                    <td>{{ h[1] }}</td>
+                    <td>{{ h[2] }}</td>
+                    <td>{{ h[3] }}</td>
+                    <td>{{ h[4] }}</td>
+                    <td>{{ h[5] }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        
+        <a href="/" class="back-button"><i class="fas fa-arrow-left"></i> Back Home</a>
+    </div>
+</body>
+</html>
+
+

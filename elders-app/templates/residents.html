@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Residents</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1><i class="fas fa-users"></i> Residents List</h1>
+        
+        <form method="POST" action="/add_resident" class="card">
+            <h2><i class="fas fa-user-plus"></i> Add New Resident</h2>
+            <div class="form-row">
+                <div class="form-group">
+                    <input type="text" name="first_name" placeholder="First Name" required>
+                </div>
+                <div class="form-group">
+                    <input type="text" name="last_name" placeholder="Last Name" required>
+                </div>
+                <div class="form-group">
+                    <input type="date" name="dob" required>
+                </div>
+                <div class="form-group">
+                    <input type="text" name="gender" placeholder="Gender" required>
+                </div>
+                <div class="form-group">
+                    <input type="date" name="admission_date" required>
+                </div>
+                <div class="form-group">
+                    <input type="number" name="room_number" placeholder="Room Number" required>
+                </div>
+            </div>
+            <button type="submit"><i class="fas fa-plus-circle"></i> Add Resident</button>
+        </form>
+        
+        <div class="card">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                <h2><i class="fas fa-list"></i> Current Residents</h2>
+                <input type="text" id="searchResident" placeholder="Search residents..." style="width: 250px; padding: 0.5rem; border-radius: 8px; border: 1px solid #ddd;">
+            </div>
+            
+            <table id="residentsTable">
+                <tr>
+                    <th>ID</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>DOB</th>
+                    <th>Gender</th>
+                    <th>Admission</th>
+                    <th>Room</th>
+                    <th>Actions</th>
+                </tr>
+                {% for resident in residents %}
+                <tr>
+                    <td>{{ resident[0] }}</td>
+                    <td>{{ resident[1] }}</td>
+                    <td>{{ resident[2] }}</td>
+                    <td>{{ resident[3] }}</td>
+                    <td>{{ resident[4] }}</td>
+                    <td>{{ resident[5] }}</td>
+                    <td>{{ resident[6] }}</td>
+                    <td>
+                        <form method="POST" action="/delete_resident/{{ resident[0] }}" onsubmit="return confirm('Are you sure you want to delete this resident? This will also remove their health details, guardian information, and food preferences.');">
+                            <button type="submit" class="delete-btn">
+                                <i class="fas fa-trash-alt"></i> Delete
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        
+        <a href="/" class="back-button"><i class="fas fa-arrow-left"></i> Back Home</a>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('searchResident');
+            searchInput.addEventListener('keyup', function() {
+                const searchTerm = this.value.toLowerCase();
+                const table = document.getElementById('residentsTable');
+                const rows = table.getElementsByTagName('tr');
+                
+                for (let i = 1; i < rows.length; i++) {
+                    let found = false;
+                    const cells = rows[i].getElementsByTagName('td');
+                    
+                    for (let j = 0; j < cells.length; j++) {
+                        const cellText = cells[j].textContent.toLowerCase();
+                        if (cellText.includes(searchTerm)) {
+                            found = true;
+                            break;
+                        }
+                    }
+                    
+                    rows[i].style.display = found ? '' : 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
